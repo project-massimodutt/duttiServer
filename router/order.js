@@ -39,7 +39,7 @@ orderRouter.use(function (req, res, next) {
 /*订单*/
 orderRouter.get('/user/order', function (req, res) {
     console.log("获取订单");
-    orderModel.find(req.body, function (err, docs) {
+    orderModel.find(req.query, function (err, docs) {
         if (err) {
             console.error(err);
             res.json({
@@ -61,6 +61,7 @@ orderRouter.get('/user/order', function (req, res) {
 /*生成订单*/
 orderRouter.post('/order/add', function (req, res) {
     console.log("订单生成");
+    
     //生成订单号函数
     function randomString() {
         let $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -69,21 +70,7 @@ orderRouter.post('/order/add', function (req, res) {
         for (i = 0; i < 8; i++) {
             pwd += $chars.charAt(Math.floor(Math.random() * (maxPos + 1)));
         }
-        orderModel.findOne({orderNum: pwd}, function (err, docs) {
-            if (err) {
-                res.json({
-                    status: 0,
-                    msg: '生成失败',
-                    err: err,
-                });
-            } else {
-                if (docs) {
-                    randomString()
-                } else {
-                    return pwd;
-                }
-            }
-        })
+        return pwd;
     }
     
     let orderNum = randomString();
@@ -97,7 +84,7 @@ orderRouter.post('/order/add', function (req, res) {
                 err: err
             });
         } else {
-            console.log(docs);
+            // console.log(docs);
             res.json({
                 status: 1,
                 msg: '添加成功'
@@ -110,7 +97,7 @@ orderRouter.post('/order/add', function (req, res) {
 orderRouter.post('/order/update', function (req, res) {
     console.log("修改订单");
     console.log(req.body);
-    orderModel.update({_id: req.body.orderid},{status:req.body.status},function (err, msg) {
+    orderModel.update({_id: req.body.orderid}, {status: req.body.status}, function (err, msg) {
         if (err) {
             console.log(docs);
             res.json({

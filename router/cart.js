@@ -32,7 +32,7 @@ cartRouter.use(function (req, res, next) {
 /*购物车*/
 cartRouter.get('/user/cart', function (req, res) {
     console.log("获取购物车");
-    cartModel.find(req.body, function (err, docs) {
+    cartModel.find(req.query, function (err, docs) {
         if (err) {
             console.error(err);
             res.json({
