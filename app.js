@@ -6,7 +6,7 @@ const MongoStore = require('connect-mongo')(session);
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
-/*自用启动命令:mongod --dbpath=C:\duttServer\mongo*/
+/*自用启动命令:mongod --dbpath=C:\MassimoDutti\duttiServer\mongo*/
 const mongoose = require('mongoose');
 const db = mongoose.connect('mongodb://localhost:27017/dutt');
 /*验证链接成功与否*/
